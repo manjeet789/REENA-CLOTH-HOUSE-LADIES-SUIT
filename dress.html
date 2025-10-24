@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reena Cloth House — Elegant Ladies & Kids Wear</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #b5179e;
+      --secondary: #7209b7;
+      --accent: #f72585;
+      --bg: #fff7fb;
+      --text: #333;
+      --hero-text: #ffe8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; font-size: 1.8rem; }
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1613553474177-1f54d30e7d66?auto=format&fit=crop&w=1200&q=60') center/cover no-repeat;
+      color: var(--hero-text);
+      text-align: center;
+      padding: 120px 20px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    .hero h2 { font-size: 2.4rem; margin-bottom: 0.5rem; }
+    .hero p { font-size: 1.2rem; }
+
+    .section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: var(--secondary);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .card-body { padding: 15px; }
+    .card-body h3 { margin: 0 0 10px; font-size: 1.2rem; color: var(--primary); }
+    .price { font-weight: 600; color: var(--accent); }
+    .btn {
+      display: inline-block;
+      background: var(--secondary);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--primary); }
+
+    #checkout {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 1000;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cart-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 400px;
+      z-index: 2000;
+    }
+    #cart-modal h3 { margin-top: 0; }
+    #cart-modal ul {
+      list-style: none;
+      padding: 0;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    #cart-modal li { margin-bottom: 6px; font-size: 0.9rem; }
+    #close-cart, #pay-now {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      font-weight: 600;
+    }
+    #pay-now { background: var(--accent); }
+
+    #popup {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 3000;
+      animation: fadeInOut 3s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    #upi-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      z-index: 3000;
+    }
+    #upi-modal img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    #close-upi {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      background: var(--secondary);
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>REENA CLOTH HOUSE</h1>
+    <nav>
+      <a href="#ladies">Ladies Wear</a>
+      <a href="#kids">Kids Wear</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Discover Elegance & Comfort</h2>
+    <p>Beautiful suits, salwars & kids fashion — curated for every occasion.</p>
+  </section>
+
+  <section class="section" id="ladies">
+    <h2>Ladies Collection</h2>
+    <div class="products" id="ladies-products"></div>
+  </section>
+
+  <section class="section" id="kids">
+    <h2>Kids Collection</h2>
+    <div class="products" id="kids-products"></div>
+  </section>
+
+  <div id="checkout">🛒 Checkout</div>
+
+  <div id="cart-modal">
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total: ₹0</p>
+    <p><strong>Payment Method: UPI Only</strong></p>
+    <button id="pay-now">Pay Now</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <!-- ✅ UPI QR Modal -->
+  <div id="upi-modal">
+    <h3>Scan to Pay via UPI</h3>
+    <img src="./GooglePay_QR (2).png" alt="UPI QR Code">
+    <p>UPI ID: <strong>manjeetmalik0122@okhdfcbank</strong></p>
+    <p style="font-size:0.9rem; color:#444; margin-top:8px;">
+      📸 After completing payment, please send a <strong>screenshot of your payment</strong> 
+      along with your <strong>name & items</strong> to WhatsApp:
+      <br><a href="https://wa.me/+91 8396505707" target="_blank" style="color:var(--accent); font-weight:600;">+91 8396805707
+    
+      </a>
+    </p>
+    <button id="close-upi">Done</button>
+  </div>
+
+  <div id="popup">Item added to cart!</div>
+
+  <footer id="contact">
+    <p>© 2025 Reena Cloth House | Designed with ❤️ for style & comfort</p>
+    <p>Contact: +91 8396805707 | reena.clothhouse@example.com</p>
+  </footer>
+
+  <script>
+    const ladiesItems = [
+      {name: 'Anarkali Suit - Floral Print', price: 2200, img: '1.jpg.webp'},
+      {name: 'Cotton Salwar Suit', price: 1200, img: '2.jpg.jpg'},
+      {name: 'Chanderi Silk Suit', price: 2500, img: '3.jpg.jpg'},
+      {name: 'Printed Kurti Set', price: 950, img: '4.jpg.jpg'},
+      {name: 'Embroidered Salwar Suit', price: 1800, img: '5.jpg.jpg'},
+      {name: 'Party Wear Sharara', price: 2400, img: '6.jpg.jpg'},
+      {name: 'Georgette Suit Set', price: 2000, img: '7.jpg.jpg'},
+      {name: 'Simple Daily Wear Suit', price: 800, img: '8.jpg.jpg'},
+      {name: 'Designer Kurti', price: 1500, img: '9.jpg.jpg'},
+      {name: 'Patiala Salwar Suit', price: 1300, img: '10.jpg.jpg'}
+    ];
+
+    const kidsItems = [
+      {name: 'Floral Frock', price: 550, img: '13.jpg.webp'},
+      {name: 'Party Dress - Pink', price: 750, img: '14.jpg.webp'},
+      {name: 'Cotton Frock', price: 450, img: '11.jpg.jpg'},
+      {name: 'Baby Kurta Set', price: 650, img: '12.jpg.jpg'}
+    ];
+
+    const ladiesContainer = document.getElementById('ladies-products');
+    const kidsContainer = document.getElementById('kids-products');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCartBtn = document.getElementById('close-cart');
+    const payNowBtn = document.getElementById('pay-now');
+    const popup = document.getElementById('popup');
+    const upiModal = document.getElementById('upi-modal');
+    const closeUpiBtn = document.getElementById('close-upi');
+
+    let cart = [];
+
+    function renderProducts(container, items) {
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p class="price">₹${item.price}</p>
+            <button class="btn add-to-cart">Add to Cart</button>
+          </div>
+        `;
+        card.querySelector('.add-to-cart').addEventListener('click', () => addToCart(item));
+        container.appendChild(card);
+      });
+    }
+
+    function addToCart(item) {
+      cart.push(item);
+      showPopup("Item added to cart!");
+    }
+
+    function showPopup(message) {
+      popup.textContent = message;
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 2500);
+    }
+
+    function showCart() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      cart.forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = `${i.name} - ₹${i.price}`;
+        cartItemsContainer.appendChild(li);
+        total += i.price;
+      });
+      cartTotal.textContent = `Total: ₹${total}`;
+      cartModal.style.display = 'block';
+    }
+
+    function closeCart() { cartModal.style.display = 'none'; }
+
+    function payNow() { upiModal.style.display = 'block'; }
+
+    closeUpiBtn.addEventListener('click', () => {
+      upiModal.style.display = 'none';
+      showPopup("📸 Please send payment screenshot on WhatsApp with name & items.");
+      cart = [];
+      closeCart();
+    });
+
+    checkoutBtn.addEventListener('click', showCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    payNowBtn.addEventListener('click', payNow);
+
+    renderProducts(ladiesContainer, ladiesItems);
+    renderProducts(kidsContainer, kidsItems);
+  </script>
+</body>
+</html>
